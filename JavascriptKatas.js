@@ -145,3 +145,41 @@ function formatDuration(seconds) {
     }
 }
 
+//  FUNCTION THAT TAKES IN 2 NUMBER ARRAYS IN ANY ORDER [FIRST NUMBER MUST BE LOWER] THEN MERGES ALL OVERLAPPING ARRAYS AND RETURNS THE LEAST DISTANCE BETWEEN ALL REMAINING ARRAYS
+
+function sumIntervals(intervals) {
+    var intervals = intervals.sort((a, b) => {
+        if (b[0] > a[0]) {
+            return -1
+        }
+    })
+    if (intervals.length == 1) {
+        return intervals[0][1] - intervals[0][0]
+    }
+    var cache = null;
+    var newIntervals = []
+    intervals.map(function (x, index) {
+        if (cache) {
+            if (x[0] > cache[1]) {
+                newIntervals.push(cache)
+                if (index == intervals.length - 1) {
+                    newIntervals.push(x)
+                }
+                cache = x
+            } else if (x[0] <= cache[1] && x[1] >= cache[0]) {
+                var start = x[0] < cache[0] ? x[0] : cache[0];
+                var end = x[1] > cache[1] ? x[1] : cache[1];
+                cache = [start, end]
+                if (index == intervals.length - 1) {
+                    newIntervals.push(cache)
+                }
+            }
+        }
+        if (cache == null) {
+            cache = x;
+        }
+    })
+    var sum = 0
+    newIntervals.map(x => sum += ((x[1] - 0) - (x[0] - 0)))
+    return sum
+}
