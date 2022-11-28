@@ -183,3 +183,15 @@ function sumIntervals(intervals) {
     newIntervals.map(x => sum += ((x[1] - 0) - (x[0] - 0)))
     return sum
 }
+
+// FUNCTION TO DETERMINE IF THE PARENTHESE ARE VALID IN AN INPUT
+function validParentheses(parens) {
+    var c = { total: parens.split('') }
+    for (let i = 0; i < c.total.length - 1; i++) {
+        if (c.total[i] == '(' && c.total[i + 1] == ')') {
+            c.total.splice(i, 2)
+            i -= 2
+        }
+    }
+    return c.total.length == 0
+}
