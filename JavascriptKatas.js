@@ -284,3 +284,77 @@ var snail = function (array) {
 
     return [array[0], array.slice(1, array.length - 1).map(x => x.slice(-1)).flat(1), array.reverse()[0].reverse(), array.slice(1, array.length - 1).map(x => x[0]), center.length > 0 ? snail(center) : []].flat(array.length)
 }
+
+// FUNCTION TO RETURN IF TWO ARRAYS ARE THE SAME NESTED STUCTURE (NO EMPTY ARRAYS CAN BE PASSED IN)
+
+Array.prototype.sameStructureAs = function (other) {
+    var number = 0;
+    function recursion(recur) {
+        number++
+        return recur.map((x, rum) => {
+            if (rum == (recur.length - 1)) {
+                number--
+                if (!x.length) {
+                    return number + 1
+                }
+            }
+            if (!x.length) {
+                return number
+            } else if (x.length) {
+                return recursion(x)
+            }
+        })
+    }
+
+    var first = recursion(other)
+    var second = recursion(this)
+    function flatten(ary) {
+        var final = [];
+        for (var i = 0; i < ary.length; i++) {
+            if (Array.isArray(ary[i])) {
+                final = final.concat(flatten(ary[i]));
+            } else {
+                final.push(ary[i]);
+            }
+        }
+        return final;
+    }
+    var first = flatten(first)
+    var second = flatten(second)
+    return first.toString() == second.toString()
+};
+
+
+// // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // EXRTA FUNCTION AND TECHNIQUES
+
+//  FUNCTION COMPARES TWO NESTED ARRAYS STRUCTURES AND RETURNS TRUE OR FALSE IN REFERRENCE
+// BASIC FUNCTIONALITY COMPLETED JUST NEEDS COMPARISON 
+function(other, two) {
+
+    var number = 0;
+    var section = [];
+    var index = -1
+
+    function recursion(recur) {
+        number++
+        return recur.map((x) => {
+            if (!x.length) {
+                // console.log(section)
+                // console.log(index)
+                // console.log(number)
+                // section[index] -= 1
+                if (section[index] === 0) {
+                    number--
+                    index--
+                }
+                section[index] -= 1
+                return number
+            } else if (x.length) {
+                section[index] -= 1
+                section.push(x.length)
+                index++
+                return recursion(x)
+            }
+        })
+    }
+}
