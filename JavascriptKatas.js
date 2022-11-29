@@ -198,7 +198,7 @@ function validParentheses(parens) {
 
 // FIBONACCI PATTERN ON ARRAY WITH EVEN SAME NUMBER OF LENGTH AS VALUES IN SAID LENGTHS
 
-snail = function (array) {
+var oldSnail = function (array) {
     var c = {
         x: 0,
         y: 0,
@@ -271,5 +271,16 @@ snail = function (array) {
             }
         })
     }
-    return c.s.values
+    return c.s.final
+}
+
+// MORE EFFICIENT CONTINUATION OF FIBONACCI/SNAIL PATTERN FUNCTION
+
+var snail = function (array) {
+    if (array.length == 1) {
+        return array.flat(1)
+    }
+    var center = array.slice(1, array.length - 1).map(x => x.slice(1, x.length - 1))
+
+    return [array[0], array.slice(1, array.length - 1).map(x => x.slice(-1)).flat(1), array.reverse()[0].reverse(), array.slice(1, array.length - 1).map(x => x[0]), center.length > 0 ? snail(center) : []].flat(array.length)
 }
