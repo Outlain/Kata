@@ -195,3 +195,81 @@ function validParentheses(parens) {
     }
     return c.total.length == 0
 }
+
+// FIBONACCI PATTERN ON ARRAY WITH EVEN SAME NUMBER OF LENGTH AS VALUES IN SAID LENGTHS
+
+snail = function (array) {
+    var c = {
+        x: 0,
+        y: 0,
+        horizontal: {
+            motion: true,
+            positive: true,
+        },
+        vertical: {
+            motion: false,
+            positive: false,
+        },
+        s: {
+            values: [],
+            max: (array.length * array.length),
+            itteration: 0,
+            current: array.length - 1,
+            add: array.length - 1,
+        },
+        final: []
+
+    }
+    function changeMotion() {
+        c.horizontal.motion = !c.horizontal.motion
+        c.vertical.motion = !c.vertical.motion
+    }
+
+    function changeDirection() {
+        c.horizontal.positive = !c.horizontal.positive
+        c.vertical.positive = !c.vertical.positive
+    }
+    while (c.s.current <= c.s.max) {
+        if (c.s.itteration != 0) {
+            if (c.s.itteration % 2 == 0) {
+                c.s.add -= 1
+                if (c.s.add == 0) {
+                    c.s.add = 1
+                }
+            }
+        }
+        if (c.s.current <= c.s.max) {
+            c.s.values.push(c.s.current)
+        }
+
+        c.s.current += c.s.add
+        c.s.itteration++
+    }
+    var fixing = [4, 8, 12, 15, 18, 20, 22, 23]
+    for (let i = 0; i < (array.length * array.length); i++) {
+        c.final.push(array[c.y][c.x])
+        if (c.horizontal.motion) {
+            if (c.horizontal.positive) {
+                c.x += 1
+            } else {
+                c.x -= 1
+            }
+        }
+        if (c.vertical.motion) {
+            if (c.vertical.positive) {
+                c.y += 1
+            } else {
+                c.y -= 1
+            }
+        }
+        c.s.values.map((x, index) => {
+            if ((x - 1) == (i)) {
+                changeMotion()
+                if (index % 2 == 0) {
+                    changeDirection();
+                }
+            }
+        })
+    }
+    return c.s.values
+}
