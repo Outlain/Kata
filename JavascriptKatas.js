@@ -324,6 +324,46 @@ Array.prototype.sameStructureAs = function (other) {
     return first.toString() == second.toString()
 };
 
+// FUNCTION THAT RETURNS TRUE IF THE TWO ARGUMENTS HAVE THE SAME NESTED ARRAY STRUCTURE
+// WORKING ON CURRENTLY NOT FINISHED
+Array.prototype.sameStructureAs = function (other) {
+    var number = 0;
+    function recursion(recur) {
+        number++
+        return recur.map((x, rum) => {
+            if (rum == (recur.length - 1)) {
+                number--
+                if (!x.length) {
+                    return number + 1
+                }
+            }
+            if (!x.length) {
+                return number
+            } else if (x.length) {
+                return recursion(x)
+            }
+        })
+    }
+
+    var first = recursion(other)
+    var second = recursion(this)
+    function flatten(ary) {
+        var final = [];
+        for (var i = 0; i < ary.length; i++) {
+            if (Array.isArray(ary[i])) {
+                final = final.concat(flatten(ary[i]));
+            } else {
+                final.push(ary[i]);
+            }
+        }
+        return final;
+    }
+    var first = flatten(first)
+    var second = flatten(second)
+    console.log(first.toString())
+    console.log(second.toString())
+    return first.toString() == second.toString()
+};
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // EXRTA FUNCTION AND TECHNIQUES
 
