@@ -326,7 +326,7 @@ Array.prototype.sameStructureAs = function (other) {
 
 // FUNCTION THAT RETURNS TRUE IF THE TWO ARGUMENTS HAVE THE SAME NESTED ARRAY STRUCTURE
 
-Array.prototype.sameStructureAs = function(other) {
+Array.prototype.sameStructureAs = function (other) {
     if (this.length != other.length) {
         return false
     }
@@ -372,6 +372,33 @@ Array.prototype.sameStructureAs = function(other) {
     var second = flatten(second)
     return first.toString() == second.toString()
 };
+
+// FUNCTION TO REDUCE DIRECTIONS GIVEN IN N,W,S,E FORMAT (MUST BE CAPITAL AND FULL TEXT: NORTH) TO THE SHORTEST DISTANCE
+
+function dirReduc(arr) {
+    var p = {
+        NORTH: 'SOUTH',
+        SOUTH: 'NORTH',
+        EAST: 'WEST',
+        WEST: 'EAST',
+    }
+
+    function recur() {
+        var testing = true
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] == p[arr[i + 1]]) {
+                console.log(arr[i], i, arr[i + 1], i + 1)
+                arr[i] = false
+                arr[i + 1] = false
+                testing = false
+            }
+        }
+        arr = arr.filter(x => x != false)
+        testing ? arr : recur(arr)
+    }
+    recur()
+    return arr
+}
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // EXRTA FUNCTION AND TECHNIQUES
 
