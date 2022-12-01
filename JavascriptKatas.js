@@ -328,18 +328,19 @@ Array.prototype.sameStructureAs = function (other) {
 // WORKING ON CURRENTLY NOT FINISHED
 Array.prototype.sameStructureAs = function (other) {
     var number = 0;
+
     function recursion(recur) {
         number++
         return recur.map((x, rum) => {
             if (rum == (recur.length - 1)) {
                 number--
-                if (!x.length) {
+                if (!Array.isArray(x)) {
                     return number + 1
                 }
             }
-            if (!x.length) {
+            if (!Array.isArray(x)) {
                 return number
-            } else if (x.length) {
+            } else if (Array.isArray(x)) {
                 return recursion(x)
             }
         })
@@ -347,6 +348,7 @@ Array.prototype.sameStructureAs = function (other) {
 
     var first = recursion(other)
     var second = recursion(this)
+
     function flatten(ary) {
         var final = [];
         for (var i = 0; i < ary.length; i++) {
