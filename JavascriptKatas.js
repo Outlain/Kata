@@ -325,12 +325,18 @@ Array.prototype.sameStructureAs = function (other) {
 };
 
 // FUNCTION THAT RETURNS TRUE IF THE TWO ARGUMENTS HAVE THE SAME NESTED ARRAY STRUCTURE
-// WORKING ON CURRENTLY NOT FINISHED
-Array.prototype.sameStructureAs = function (other) {
+
+Array.prototype.sameStructureAs = function(other) {
+    if (this.length != other.length) {
+        return false
+    }
     var number = 0;
 
-    function recursion(recur) {
+    function recursion(recur, callback) {
         number++
+        if (recur.length == 0) {
+            return number
+        }
         return recur.map((x, rum) => {
             if (rum == (recur.length - 1)) {
                 number--
@@ -344,9 +350,11 @@ Array.prototype.sameStructureAs = function (other) {
                 return recursion(x)
             }
         })
+        number = 0
     }
 
     var first = recursion(other)
+    number = 0
     var second = recursion(this)
 
     function flatten(ary) {
@@ -362,8 +370,6 @@ Array.prototype.sameStructureAs = function (other) {
     }
     var first = flatten(first)
     var second = flatten(second)
-    console.log(first.toString())
-    console.log(second.toString())
     return first.toString() == second.toString()
 };
 
